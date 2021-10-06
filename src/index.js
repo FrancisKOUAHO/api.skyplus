@@ -8,7 +8,7 @@ import {search} from "./methods/search";
 import {click_button} from "./methods/click_button";
 import {get_infos_users} from "./methods/get_infos_users";
 import {save_data} from "./methods/save_data";
-import user_informations from './models/user_informations'
+
 async function main(){
     try {
         mongoose.connect('mongodb+srv://Francis:WAIRECRAFFTERLOUANNE2020@skyplus.e0y0i.mongodb.net/Plumera?retryWrites=true&w=majority')
@@ -43,13 +43,6 @@ async function main(){
 
         await save_data(GLOBAL_DATA_USERS)
         await sleep_for(page, 500, 1000)
-
-        const DATA_FOR_SAVE = await new user_informations(GLOBAL_DATA_USERS)
-        await DATA_FOR_SAVE.save().then(()=>{
-            console.log('saved')
-        }).catch(()=>{
-            console.log('saved')
-        })
 
         await browser.close()
 
