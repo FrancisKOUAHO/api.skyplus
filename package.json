@@ -2,12 +2,14 @@
   "name": "app.plumera",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon --experimental-modules --es-module-specifier-resolution=node src/index.js"
   },
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^10.4.0"
+    "nodemon": "^2.0.13",
+    "puppeteer": "^10.4.0",
+    "xlsx": "^0.17.2"
   }
 }
