@@ -8,8 +8,12 @@
   },
   "license": "MIT",
   "dependencies": {
+    "mongoose": "^6.0.9",
     "nodemon": "^2.0.13",
     "puppeteer": "^10.4.0",
     "xlsx": "^0.17.2"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
   }
 }

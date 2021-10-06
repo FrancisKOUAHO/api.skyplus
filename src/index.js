@@ -1,15 +1,24 @@
 import puppeteer from "puppeteer";
-import xlsx from "xlsx"
+import mongoose from "mongoose";
+
+
 import {sleep_for} from "./methods/sleep_for";
 import {authenticate} from "./methods/authenticate";
 import {search} from "./methods/search";
 import {click_button} from "./methods/click_button";
 import {get_infos_users} from "./methods/get_infos_users";
-
-
-(async () => {
+import {save_data} from "./methods/save_data";
+import user_informations from './models/user_informations'
+async function main(){
     try {
-        const browser = await puppeteer.launch({headless: false});
+        mongoose.connect('mongodb+srv://Francis:WAIRECRAFFTERLOUANNE2020@skyplus.e0y0i.mongodb.net/Plumera?retryWrites=true&w=majority')
+            .then(()=>(
+                console.log('mongoDB is connected')
+            )).catch((e)=>{
+            console.log(`${e} mongoDB is not connected`)
+        })
+
+        const browser = await puppeteer.launch({headless: true});
         const page = await browser.newPage();
         const URL = 'https://www.linkedin.com';
         await page.setViewport({
@@ -21,27 +30,33 @@ import {get_infos_users} from "./methods/get_infos_users";
         await sleep_for(page, 1000, 2000)
 
         await authenticate(page)
-        await sleep_for(page, 9000, 1500)
+        await sleep_for(page, 5000, 9000)
         await search(page)
         await click_button(page, 'li.search-reusables__primary-filter')
 
         await sleep_for(page, 500, 1000)
 
-        const DATA_USERS = await get_infos_users(page)
-        console.log(DATA_USERS)
+        const GLOBAL_DATA_USERS = await get_infos_users(page)
+        console.log(GLOBAL_DATA_USERS)
         await sleep_for(page, 500, 1000)
 
 
-        const wb = xlsx.utils.book_new()
-        const ws = xlsx.utils.json_to_sheet(DATA_USERS)
-        xlsx.utils.book_append_sheet(wb, ws)
-        xlsx.writeFile(wb, 'data_linkedin.xlsx')
-
+        await save_data(GLOBAL_DATA_USERS)
         await sleep_for(page, 500, 1000)
+
+        const DATA_FOR_SAVE = await new user_informations(GLOBAL_DATA_USERS)
+        await DATA_FOR_SAVE.save().then(()=>{
+            console.log('saved')
+        }).catch(()=>{
+            console.log('saved')
+        })
+
         await browser.close()
 
         console.log("Done!")
     } catch (e) {
         console.log(e)
     }
-})();
+}
+
+main()
