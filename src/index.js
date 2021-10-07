@@ -1,23 +1,14 @@
 import puppeteer from "puppeteer";
-import mongoose from "mongoose";
-
-
+import xlsx from "xlsx"
 import {sleep_for} from "./methods/sleep_for";
 import {authenticate} from "./methods/authenticate";
 import {search} from "./methods/search";
 import {click_button} from "./methods/click_button";
 import {get_infos_users} from "./methods/get_infos_users";
-import {save_data} from "./methods/save_data";
 
-async function main(){
+
+(async () => {
     try {
-        mongoose.connect('mongodb+srv://Francis:WAIRECRAFFTERLOUANNE2020@skyplus.e0y0i.mongodb.net/Plumera?retryWrites=true&w=majority')
-            .then(()=>(
-                console.log('mongoDB is connected')
-            )).catch((e)=>{
-            console.log(`${e} mongoDB is not connected`)
-        })
-
         const browser = await puppeteer.launch({headless: false});
         const page = await browser.newPage();
         const URL = 'https://www.linkedin.com';
@@ -30,39 +21,27 @@ async function main(){
         await sleep_for(page, 1000, 2000)
 
         await authenticate(page)
-        await sleep_for(page, 30000, 50000)
+        await sleep_for(page, 9000, 1500)
         await search(page)
         await click_button(page, 'li.search-reusables__primary-filter')
 
         await sleep_for(page, 500, 1000)
 
-        const itemsList = await page.$('li.artdeco-pagination__indicator.artdeco-pagination__indicator--number.ember-view')
-        const elements = await itemsList.$$('li.artdeco-pagination__indicator.artdeco-pagination__indicator--number.ember-view');
-        const data = [];
-        for (const element of elements) {
-            await element.click();
-        }
-
+        const DATA_USERS = await get_infos_users(page)
+        console.log(DATA_USERS)
         await sleep_for(page, 500, 1000)
 
 
-
-
-   /*     const GLOBAL_DATA_USERS = await get_infos_users(page)
-        console.log(GLOBAL_DATA_USERS)
+        const wb = xlsx.utils.book_new()
+        const ws = xlsx.utils.json_to_sheet(DATA_USERS)
+        xlsx.utils.book_append_sheet(wb, ws)
+        xlsx.writeFile(wb, 'data_linkedin.xlsx')
 
         await sleep_for(page, 500, 1000)
-
-
-        await save_data(GLOBAL_DATA_USERS)
-        await sleep_for(page, 500, 1000)*/
-
         await browser.close()
 
         console.log("Done!")
     } catch (e) {
         console.log(e)
     }
-}
-
-main()
+})();
