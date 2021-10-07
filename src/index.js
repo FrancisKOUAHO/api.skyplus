@@ -18,7 +18,7 @@ async function main(){
             console.log(`${e} mongoDB is not connected`)
         })
 
-        const browser = await puppeteer.launch({headless: true});
+        const browser = await puppeteer.launch({headless: false});
         const page = await browser.newPage();
         const URL = 'https://www.linkedin.com';
         await page.setViewport({
@@ -30,19 +30,32 @@ async function main(){
         await sleep_for(page, 1000, 2000)
 
         await authenticate(page)
-        await sleep_for(page, 5000, 9000)
+        await sleep_for(page, 30000, 50000)
         await search(page)
         await click_button(page, 'li.search-reusables__primary-filter')
 
         await sleep_for(page, 500, 1000)
 
-        const GLOBAL_DATA_USERS = await get_infos_users(page)
+        const itemsList = await page.$('li.artdeco-pagination__indicator.artdeco-pagination__indicator--number.ember-view')
+        const elements = await itemsList.$$('li.artdeco-pagination__indicator.artdeco-pagination__indicator--number.ember-view');
+        const data = [];
+        for (const element of elements) {
+            await element.click();
+        }
+
+        await sleep_for(page, 500, 1000)
+
+
+
+
+   /*     const GLOBAL_DATA_USERS = await get_infos_users(page)
         console.log(GLOBAL_DATA_USERS)
+
         await sleep_for(page, 500, 1000)
 
 
         await save_data(GLOBAL_DATA_USERS)
-        await sleep_for(page, 500, 1000)
+        await sleep_for(page, 500, 1000)*/
 
         await browser.close()
 
