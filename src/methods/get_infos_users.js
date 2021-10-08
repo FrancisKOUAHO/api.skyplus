@@ -1,5 +1,6 @@
+/*
 const get_infos_users = async (page)=>{
-    const user_infos = await page.evaluate(() => {
+    const user_infos = await page.evaluate(async () => {
         let user = [];
         let elements = document.querySelectorAll('div.entity-result__item');
         for (let element of elements) {
@@ -19,3 +20,4 @@ const get_infos_users = async (page)=>{
 export {
     get_infos_users
 }
+*/
