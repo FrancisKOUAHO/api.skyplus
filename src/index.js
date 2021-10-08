@@ -55,9 +55,9 @@ async function main() {
 
 
             // pagination part
-            await page.waitFor(2000)
+            await page.waitFor(1000)
             await page.click('button[aria-label="Suivant"]')
-            await page.waitFor(2000)
+            await page.waitFor(1000)
 
             console.log("user", DATA_USERS);
             return DATA_USERS;
