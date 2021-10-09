@@ -1,0 +1,34 @@
+import {sleep_for} from "./src/methods/sleep_for";
+
+for (let k = 0; k <= 2; k++){
+    const user_infos = await page.evaluate(async (page) => {
+        let DATA_USERS = [];
+        let elements = document.querySelectorAll('div.entity-result__item');
+        for (let element of elements) {
+            DATA_USERS.push({
+                fullName: element.querySelector("div.ph0 > ul > li > div > div > div > div > div > div > span > span > a > span > span")?.textContent.trim(),
+                job: element.querySelector('div.entity-result__primary-subtitle.t-14.t-black.t-normal')?.textContent.trim(),
+                localisations: element.querySelector('div.entity-result__secondary-subtitle.t-14.t-normal')?.textContent.trim(),
+                company: element.querySelector('p.entity-result__summary.entity-result__summary--2-lines.t-12.t-black--light.mb1')?.textContent.trim(),
+                image: element.querySelector('img.ivm-view-attr__img--centered')?.src
+            })
+
+        }
+        return DATA_USERS
+    })
+    console.log(user_infos)
+
+    await page.waitFor(10000);
+
+    for(let j = 0; j <=4; j++){
+        await page.keyboard.press('Space');
+    }
+
+    await page.waitFor('button[aria-label="Suivant"]');
+    await page.click('button[aria-label="Suivant"]');
+
+    console.log('Page Suivante...')
+    await sleep_for(page, 500, 1000)
+
+
+}

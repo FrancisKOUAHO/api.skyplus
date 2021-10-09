@@ -1,23 +1,47 @@
-/*
+import {sleep_for} from "./sleep_for";
+
 const get_infos_users = async (page)=>{
-    const user_infos = await page.evaluate(async () => {
-        let user = [];
-        let elements = document.querySelectorAll('div.entity-result__item');
-        for (let element of elements) {
-            user.push({
-                fullName: element.querySelector("div.ph0 > ul > li > div > div > div > div > div > div > span > span > a > span > span").textContent.trim(),
-                job: element.querySelector('div.entity-result__primary-subtitle.t-14.t-black.t-normal').textContent.trim(),
-                localisations: element.querySelector('div.entity-result__secondary-subtitle.t-14.t-normal').textContent.trim(),
-                company: element.querySelector('p.entity-result__summary.entity-result__summary--2-lines.t-12.t-black--light.mb1').textContent.trim(),
-                image: element.querySelector('img.ivm-view-attr__img--centered.EntityPhoto-circle-3.lazy-image.ember-view').src
+    const GLOBAL_DATA_USERS = [];
+    for (let k = 0; k <= 10; k++){
+        const clients = await page.evaluate(() => {
+            let items = document.querySelectorAll('div.entity-result__item');
+            const user_infos = Array.from(items).map((item) => {
+                const fullName = item.querySelector("div.ph0 > ul > li > div > div > div > div > div > div > span > span > a > span > span")?.textContent.trim();
+                const job = item.querySelector('div.entity-result__primary-subtitle.t-14.t-black.t-normal')?.textContent.trim();
+                const localisations = item.querySelector('div.entity-result__secondary-subtitle.t-14.t-normal')?.textContent.trim();
+                const company = item.querySelector('p.entity-result__summary.entity-result__summary--2-lines.t-12.t-black--light.mb1')?.textContent.trim();
+                const image = item.querySelector('img.ivm-view-attr__img--centered')?.src
+
+                return{
+                    fullName,
+                    job,
+                    localisations,
+                    company,
+                    image
+                }
+
             })
+            return user_infos
+        })
+        GLOBAL_DATA_USERS.push(...clients);
+
+        await page.waitFor(10000);
+
+        for(let j = 0; j <=4; j++){
+            await page.keyboard.press('Space');
         }
-        return user
-    })
-    return user_infos
+        await page.waitFor('button[aria-label="Suivant"]');
+        await page.click('button[aria-label="Suivant"]');
+
+        console.log('Page Suivante...')
+
+        await sleep_for(page, 500, 1000)
+
+    }
+    console.log(GLOBAL_DATA_USERS)
+    return GLOBAL_DATA_USERS
 }
 
 export {
     get_infos_users
 }
-*/
