@@ -1,6 +1,6 @@
 const get_infos_users = async (page)=>{
     const GLOBAL_DATA_USERS = [];
-    for (let k = 0; k <= 10; k++){
+    for (let k = 1; k <= 5; k++){
         const clients = await page.evaluate(() => {
             let items = document.querySelectorAll('div.entity-result__item');
             const user_infos = Array.from(items).map((item) => {
@@ -25,7 +25,7 @@ const get_infos_users = async (page)=>{
 
         await page.waitFor(10000);
 
-        for(let j = 0; j <=4; j++){
+        for(let j = 1; j <=4; j++){
             await page.keyboard.press('Space');
         }
         await page.waitFor('button[aria-label="Suivant"]');
