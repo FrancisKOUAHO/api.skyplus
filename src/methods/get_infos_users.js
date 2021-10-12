@@ -1,5 +1,3 @@
-import {sleep_for} from "./sleep_for";
-
 const get_infos_users = async (page)=>{
     const GLOBAL_DATA_USERS = [];
     for (let k = 0; k <= 10; k++){
@@ -33,9 +31,9 @@ const get_infos_users = async (page)=>{
         await page.waitFor('button[aria-label="Suivant"]');
         await page.click('button[aria-label="Suivant"]');
 
-        console.log('Page Suivante...')
+        console.log(`Page n° ${k}`)
 
-        await sleep_for(page, 500, 1000)
+        await page.waitFor(10000);
 
     }
     console.log(GLOBAL_DATA_USERS)

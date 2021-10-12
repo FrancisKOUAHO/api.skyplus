@@ -1,7 +1,8 @@
 {
-  "name": "app.plumera",
+  "name": "Data_Linkedin",
   "version": "1.0.0",
   "type": "module",
+  "description": "Extraire et exporter les résultats d'une recherche sur LinkedIn.",
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node src/index.js",

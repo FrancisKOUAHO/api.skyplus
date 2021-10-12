@@ -34,7 +34,7 @@ async function main() {
         const DATA_USERS = await get_infos_users(page)
         console.log(DATA_USERS)
 
-        await page.waitForTimeout(2000)
+        await page.waitFor(2000)
 
         save_data(DATA_USERS)
 
