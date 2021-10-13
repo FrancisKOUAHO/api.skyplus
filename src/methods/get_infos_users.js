@@ -1,6 +1,6 @@
 const get_infos_users = async (page)=>{
     const GLOBAL_DATA_USERS = [];
-    for (let k = 1; k <= 5; k++){
+    for (let k = 1; k <= 3; k++){
         const clients = await page.evaluate(() => {
             let items = document.querySelectorAll('div.entity-result__item');
             const user_infos = Array.from(items).map((item) => {

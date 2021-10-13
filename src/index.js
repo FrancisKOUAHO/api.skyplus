@@ -1,7 +1,7 @@
 import express from "express";
-const app = express()
+const app = express();
 import puppeteer from "puppeteer";
-
+import cors from "cors";
 
 import {sleep_for} from "./methods/sleep_for";
 import {authenticate} from "./methods/authenticate";
@@ -9,6 +9,11 @@ import {search} from "./methods/search";
 import {click_button} from "./methods/click_button";
 import {get_infos_users} from "./methods/get_infos_users";
 import {save_data} from "./methods/save_data";
+
+
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 app.get('/scrappin-data-linkedin', function (req, res) {
     puppeteer.launch().then(async function (browser) {
