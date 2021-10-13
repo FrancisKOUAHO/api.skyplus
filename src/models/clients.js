@@ -1,14 +1,32 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const clientsSchema = new Schema({
-    full_name: String,
-    job: String,
-    localisations: String,
-    company: String,
-    image: String,
+    First_name: {
+        type: String
+    },
+    Last_name: {
+        type: String
+    },
+    FullName: {
+        type: String
+    },
+    Job: {
+        type: String
+    },
+    Localisations: {
+        type: String
+    },
+    Company: {
+        type: String
+    },
+    Image: {
+        type: String
+    },
 });
+const Client = mongoose.model('Clients', clientsSchema);
+export { Client }
 
-module.exports = mongoose.model("Clients", clientsSchema);
+
 
 

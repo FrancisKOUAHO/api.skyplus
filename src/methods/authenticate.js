@@ -20,6 +20,7 @@ const authenticate = async function (page) {
 
         await click_button(page, 'button.sign-in-form__submit-button')
 
+        console.log('Connection Linkedin OK...')
 
     }catch (e){
         console.log(`Error in Auth ${e}`)
