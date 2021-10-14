@@ -2,7 +2,7 @@ import xlsx from "xlsx";
 import path from "path";
 import moment from "moment";
 import {random_in_from_interval} from "./random_in_from_interval";
-const __dirname = path.resolve('public');
+const __dirname = path.resolve('public/data');
 
 const startDate = moment().format('YYYY-MM-DD');
 
