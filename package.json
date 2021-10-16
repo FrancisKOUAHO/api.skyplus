@@ -1,5 +1,5 @@
 {
-  "name": "Data_Linkedin",
+  "name": "Data",
   "version": "1.0.0",
   "type": "module",
   "description": "Extraire et exporter les résultats d'une recherche sur LinkedIn.",

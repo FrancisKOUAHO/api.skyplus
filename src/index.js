@@ -5,10 +5,11 @@ import cors from "cors";
 import morgan from "morgan"
 
 
-import {scrapingRoute} from "./routes/scraping.route"
+import {extractDataProfileLinkedInRoute} from "./routes/extractDataProfileLinkedIn.route"
 import {getDataLinkedinRoute} from "./routes/getDataLinkedin.route";
 import {exportDataRoute} from "./routes/exportData.route";
 import {connectToDatabase} from "./config/databaseConnection";
+import {connectProfileMessageLinkedinRoute} from "./routes/connectProfileMessageLinkedin.route";
 
 dotenv.config();
 
@@ -20,9 +21,11 @@ app.use(morgan('dev'));
 app.use(cors({origin: 'http://localhost:3000'}));
 
 
-app.use("/", scrapingRoute());
+app.use("/extract", extractDataProfileLinkedInRoute());
+app.use("/connect", connectProfileMessageLinkedinRoute())
 app.use("/", getDataLinkedinRoute());
 app.use("/", exportDataRoute());
+
 
 
 app.listen(port, async () => {

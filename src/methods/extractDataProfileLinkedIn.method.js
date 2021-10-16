@@ -1,4 +1,4 @@
-const get_infos_users = async (page) => {
+const extractDataProfileLinkedInMethod = async (page) => {
     const GLOBAL_DATA_USERS = [];
     for (let k = 1; k <= 1; k++) {
         const clients = await page.evaluate(() => {
@@ -18,11 +18,10 @@ const get_infos_users = async (page) => {
                     Last_name = tab[1]
                 }
 
-
                 return {
+                    FullName,
                     First_name,
                     Last_name,
-                    FullName,
                     Job,
                     Localisations,
                     Company,
@@ -52,5 +51,5 @@ const get_infos_users = async (page) => {
 }
 
 export {
-    get_infos_users
+    extractDataProfileLinkedInMethod
 }
