@@ -20,8 +20,7 @@ const connectProfileMessageLinkedinController = async (req, res) => {
             await page.setViewport({
                 width: 1280,
                 height: 800,
-                deviceScaleFactor: 1,
-                args: ['--no-sandbox', '--start-maximized', '--disable-setuid-sandbox', '--disable-infobars', '--window-position=0,0', '--ignore-certifcate-errors', '--ignore-certifcate-errors-spki-list',]
+                deviceScaleFactor: 1
             });
             await page.goto(URL);
             await sleep_for(page, 1000, 1200)
@@ -51,7 +50,8 @@ const connectProfileMessageLinkedinController = async (req, res) => {
             Suivi.save()
 
 
-            await browser.close()
+
+            //await browser.close()
             return res.status(201).json(
                 {
                     success: true,
