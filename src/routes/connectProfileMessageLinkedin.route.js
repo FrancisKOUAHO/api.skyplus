@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { connectProfileMessageLinkedinController } from "../controllers/connectProfileMessageLinkedin.controller";
+import { autoConnectLinkedInController } from "../controllers/autoConnectLinkedIn.controller";
 
 
 const connectProfileMessageLinkedinRoute = () => {
     const router = Router();
-    router.get('/connect-profile-message-linkedin', connectProfileMessageLinkedinController);
+    router.get('/connect-profile-message-linkedin', autoConnectLinkedInController);
     return router;
 }
 
