@@ -37,9 +37,9 @@ const extractDataProfileLinkedInController = async (req, res) => {
 
             const SAVE_DATA_MONGODB = new Client(DATA_USERS)
             console.log(`++++++++++++++++ ${JSON.stringify(DATA_USERS)}`)
-            SAVE_DATA_MONGODB.save().then(()=>{
+            SAVE_DATA_MONGODB.save().then(() => {
                 console.log('SAVE DATA TO MONGODB ')
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(`DON'T SAVE DATA TO MONGODB ${err}`)
             })
 

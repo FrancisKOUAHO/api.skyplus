@@ -4,7 +4,7 @@ import {sleep_for} from "./sleep_for";
 
 const search = async (page) => {
     try {
-        await enter_text(page, 'input.search-global-typeahead__input.always-show-placeholder', '"designer" AND "2021"')
+        await enter_text(page, 'input.search-global-typeahead__input.always-show-placeholder', '"francis" AND "2021"')
         await page.keyboard.type(String.fromCharCode(13));
         await sleep_for(page, 1000, 2000)
         console.log(`Début de la rechercher...`)

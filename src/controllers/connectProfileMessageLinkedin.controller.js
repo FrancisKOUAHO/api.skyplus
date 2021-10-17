@@ -6,7 +6,7 @@ import {search} from "../methods/search";
 import {click_button} from "../methods/click_button";
 import {connectProfileMessageLinkedinMethod} from "../methods/connectProfileMessageLinkedin.method";
 import {setCookie} from "../methods/setCookie";
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 import {Follows} from "../models/follow";
 
 dotenv.config();
@@ -20,7 +20,8 @@ const connectProfileMessageLinkedinController = async (req, res) => {
             await page.setViewport({
                 width: 1280,
                 height: 800,
-                deviceScaleFactor: 1
+                deviceScaleFactor: 1,
+                args: ['--no-sandbox', '--start-maximized', '--disable-setuid-sandbox', '--disable-infobars', '--window-position=0,0', '--ignore-certifcate-errors', '--ignore-certifcate-errors-spki-list',]
             });
             await page.goto(URL);
             await sleep_for(page, 1000, 1200)
@@ -50,8 +51,7 @@ const connectProfileMessageLinkedinController = async (req, res) => {
             Suivi.save()
 
 
-
-            //await browser.close()
+            await browser.close()
             return res.status(201).json(
                 {
                     success: true,
