@@ -9,13 +9,13 @@ import {getDataLinkedinController} from "./getDataLinkedin.controller";
 import {Client} from "../models/clients";
 
 const extractDataProfileLinkedInController = async (req, res) => {
-    puppeteer.launch({headless: false}).then(async function (browser) {
+    puppeteer.launch({headless: true}).then(async function (browser) {
         try {
             const page = await browser.newPage();
             const URL = 'https://www.linkedin.com';
             await page.setViewport({
-                width: 1280,
-                height: 800,
+                width: 1440,
+                height: 789,
                 deviceScaleFactor: 1
             });
             await page.goto(URL);

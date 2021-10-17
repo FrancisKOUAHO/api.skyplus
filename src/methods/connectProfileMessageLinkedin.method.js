@@ -1,52 +1,70 @@
-import {sleep_for} from "./sleep_for";
-
 const connectProfileMessageLinkedinMethod = async (page) => {
-    for (let k = 1; k <= 2; k++) {
-        const get_invitations = await page.evaluate(() => {
-            let items = document.querySelectorAll('div.entity-result__item');
-            const invitations = Array.from(items).map(async (item) => {
-                await page.waitFor('#main > div > div > div.ph0.pv2.artdeco-card.mb2 > ul > li > div > div > div.entity-result__content.entity-result__divider.pt3.pb3.t-12.t-black--light > div.mb1 > div.t-roman.t-sans > div > span.entity-result__title-line.flex-shrink-1.entity-result__title-text--black > span > a')
-                await page.click('#main > div > div > div.ph0.pv2.artdeco-card.mb2 > ul > li > div > div > div.entity-result__content.entity-result__divider.pt3.pb3.t-12.t-black--light > div.mb1 > div.t-roman.t-sans > div > span.entity-result__title-line.flex-shrink-1.entity-result__title-text--black > span > a')
-                await page.waitFor(1000)
 
-                await page.waitForSelector('button.pvs-profile-actions__action.artdeco-button.artdeco-button--2.artdeco-button--primary.ember-view');
-                await page.click('button.pvs-profile-actions__action.artdeco-button.artdeco-button--2.artdeco-button--primary.ember-view')
-                await page.waitFor(1000)
+    const data = await page.evaluate(() => {
+        let data = [];
+        const elements = document.querySelectorAll('div.entity-result__item');
+        for (const element of elements) {
+            let FullName = element.querySelector("div.ph0 > ul > li > div > div > div > div > div > div > span > span > a > span > span")?.textContent.trim();
+            let First_name;
+            let Last_name;
+            let tab = FullName.split(" ");
+            for (let i = 0; i < tab.length; i++) {
+                First_name = tab[0]
+                Last_name = tab[1]
+            }
 
-                await page.waitForSelector('button.mr1.artdeco-button.artdeco-button--muted.artdeco-button--3.artdeco-button--secondary.ember-view');
-                await page.click('button.mr1.artdeco-button.artdeco-button--muted.artdeco-button--3.artdeco-button--secondary.ember-view')
-                await page.waitFor(1000)
+            /*if (page.waitForSelector('#main > div > div > div > ul > li > div > div > div.entity-result__actions.entity-result__divider > div > button')){
+
+            }*/
+
+            page.waitForSelector('#main > div > div > div > ul > li > div > div > div.entity-result__actions.entity-result__divider > div > button')
+            page.click("#main > div > div > div > ul > li > div > div > div.entity-result__actions.entity-result__divider > div > button")
+
+            page.waitFor(10000)
+
+            page.waitForSelector('div > div.artdeco-modal > div > button')
+            page.click('div > div.artdeco-modal > div > button')
+
+            page.waitFor(10000)
 
 
-                await page.waitForSelector('textarea.ember-text-area.ember-view.connect-button-send-invite__custom-message.mb3');
-                await page.click('textarea.ember-text-area.ember-view.connect-button-send-invite__custom-message.mb3')
-                await page.waitFor(1000)
+            page.waitForSelector('textarea#custom-message')
+            const session_key = page.$('textarea#custom-message');
+            session_key.type(`Bonjour, Un grand merci à vous de m'avoir accepté dans votre réseau professionnel. Très belle journée ☀.`)
 
+            page.waitFor(10000)
 
-                const session_key = await page.$('textarea.ember-text-area.ember-view.connect-button-send-invite__custom-message.mb3');
-                session_key.type('Bonjour')
-                sleep_for(page, 1000, 2000)
+            page.waitForSelector('div > div.artdeco-modal__actionbar > button.ml1')
+            page.click('div > div.artdeco-modal__actionbar > button.ml1')
 
+            page.waitFor(10000)
 
-                await page.waitForSelector('button.ml1.artdeco-button.artdeco-button--3.artdeco-button--primary.ember-view');
-                await page.click('button.ml1.artdeco-button.artdeco-button--3.artdeco-button--primary.ember-view')
-                await page.waitFor(1000)
-            })
-            return invitations
-
-        })
-        await page.waitFor(10000);
-
-        for(let j = 0; j <=4; j++){
-            await page.keyboard.press('Space');
+            data.push({
+                FullName,
+                First_name,
+                Last_name,
+            });
         }
-        await page.waitFor('button[aria-label="Suivant"]');
-        await page.click('button[aria-label="Suivant"]');
+        console.log(data)
+        return data;
+    });
+    console.log(data)
+    return data;
 
-        console.log('Page Suivante...')
+    /*    await page.waitForSelector('#main > div > div > div > ul > li > div > div > div.entity-result__actions.entity-result__divider > div > button')
+        await page.click("#main > div > div > div > ul > li > div > div > div.entity-result__actions.entity-result__divider > div > button")
 
+        await page.waitForSelector('div > div.artdeco-modal > div > button')
+        await page.click('div > div.artdeco-modal > div > button')
+
+
+        await page.waitForSelector('textarea#custom-message')
+        const session_key = await page.$('textarea#custom-message');
+        session_key.type(`Bonjour, Un grand merci à vous de m'avoir accepté dans votre réseau professionnel.Très belle journée ☀.`)
         await page.waitFor(2000)
-    }
+
+        await page.waitForSelector('div > div.artdeco-modal__actionbar > button.ml1')
+        await page.click('div > div.artdeco-modal__actionbar > button.ml1')*/
 
 }
 
