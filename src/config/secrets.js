@@ -1,5 +1,5 @@
-const username = 'kouahofrancis@gmail.com'
-const password = 'WAIRECRAFFTERLOUANNE2020'
+const username = ''
+const password = ''
 
 export {
     username,
